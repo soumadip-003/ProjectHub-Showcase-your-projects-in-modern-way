@@ -76,13 +76,10 @@ function getErrorMessage(data, fallback) {
 }
 
 function InstitutionLogo({ institution, className }) {
-  const [imageFailed, setImageFailed] = useState(false);
+  const [failedLogo, setFailedLogo] = useState("");
   const institutionName = getInstitutionName(institution);
   const logo = getInstitutionLogo(institution);
-
-  useEffect(() => {
-    setImageFailed(false);
-  }, [logo]);
+  const imageFailed = failedLogo === logo;
 
   if (!logo || imageFailed) {
     return (
@@ -97,13 +94,7 @@ function InstitutionLogo({ institution, className }) {
       <img
         src={logo}
         alt={`${institutionName} logo`}
-        onError={() => {
-          if (logo !== DEFAULT_LOGO) {
-            setImageFailed(true);
-          } else {
-            setImageFailed(true);
-          }
-        }}
+        onError={() => setFailedLogo(logo)}
       />
     </div>
   );
@@ -126,6 +117,7 @@ function InstitutionDashboard() {
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All Categories");
   const [loading, setLoading] = useState(true);
+  const [refreshKey, setRefreshKey] = useState(0);
   const [error, setError] = useState("");
   const [actionError, setActionError] = useState("");
   const [updatingId, setUpdatingId] = useState(null);
@@ -148,71 +140,76 @@ function InstitutionDashboard() {
     navigate("/institute/login", { replace: true });
   }, [navigate]);
 
-  const loadProjects = useCallback(async () => {
-    const token = localStorage.getItem("institutionToken");
-
-    if (!token) {
-      navigate("/institute/login", { replace: true });
-      return;
-    }
-
-    try {
-      setLoading(true);
-      setError("");
-
-      const storedInstitution = localStorage.getItem("institution");
-
-      if (storedInstitution) {
-        try {
-          setInstitution(JSON.parse(storedInstitution));
-        } catch {
-          localStorage.removeItem("institution");
-        }
-      }
-
-      const response = await fetch(`${API_URL}/projects/institution`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const data = await response.json().catch(() => ({}));
-
-      if (response.status === 401 || response.status === 403) {
-        throw new Error(
-          getErrorMessage(
-            data,
-            "Your session expired or your institution is not approved."
-          )
-        );
-      }
-
-      if (!response.ok) {
-        throw new Error(
-          getErrorMessage(data, "Unable to load institution projects.")
-        );
-      }
-
-      const projectList = Array.isArray(data)
-        ? data
-        : Array.isArray(data.projects)
-          ? data.projects
-          : Array.isArray(data.data)
-            ? data.data
-            : [];
-
-      setProjects(projectList);
-      setLastUpdated(new Date());
-    } catch (err) {
-      setError(err.message || "Could not connect to the server.");
-    } finally {
-      setLoading(false);
-    }
-  }, [navigate]);
-
   useEffect(() => {
-    loadProjects();
-  }, [loadProjects]);
+    const controller = new AbortController();
+
+    async function fetchProjects() {
+      const token = localStorage.getItem("institutionToken");
+
+      if (!token) {
+        navigate("/institute/login", { replace: true });
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_URL}/projects/institution`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          signal: controller.signal,
+        });
+        const data = await response.json().catch(() => ({}));
+
+        if (controller.signal.aborted) return;
+
+        setError("");
+
+        if (response.status === 401 || response.status === 403) {
+          throw new Error(getErrorMessage(data, "Your session expired or your institution is not approved."));
+        }
+        if (!response.ok) {
+          throw new Error(getErrorMessage(data, "Unable to load institution projects."));
+        }
+
+        const storedInstitution = localStorage.getItem("institution");
+        if (storedInstitution) {
+          try {
+            setInstitution(JSON.parse(storedInstitution));
+          } catch {
+            localStorage.removeItem("institution");
+          }
+        }
+
+        const projectList = Array.isArray(data)
+          ? data
+          : Array.isArray(data.projects)
+            ? data.projects
+            : Array.isArray(data.data)
+              ? data.data
+              : [];
+
+        setProjects(projectList);
+        setLastUpdated(new Date());
+      } catch (err) {
+        if (err.name === "AbortError") return;
+
+        if (!controller.signal.aborted) {
+          setError(err.message || "Could not connect to the server.");
+        }
+      } finally {
+        if (!controller.signal.aborted) setLoading(false);
+      }
+    }
+
+    fetchProjects();
+    return () => controller.abort();
+  }, [navigate, refreshKey]);
+
+  const refreshProjects = () => {
+    setLoading(true);
+    setError("");
+    setRefreshKey((currentKey) => currentKey + 1);
+  };
 
   useEffect(() => {
     return () => {
@@ -822,7 +819,7 @@ function InstitutionDashboard() {
 
             <button
               className="id-refresh-btn"
-              onClick={loadProjects}
+              onClick={refreshProjects}
               disabled={loading}
             >
               <span className={loading ? "id-refresh-spinning" : ""}>↻</span>
@@ -837,7 +834,7 @@ function InstitutionDashboard() {
                 <strong>Unable to load projects</strong>
                 <p>{error}</p>
               </div>
-              <button onClick={loadProjects}>Try again</button>
+              <button onClick={refreshProjects}>Try again</button>
             </div>
           )}
 

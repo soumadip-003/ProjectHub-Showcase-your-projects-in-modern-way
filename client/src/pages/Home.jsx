@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
 
@@ -52,57 +52,72 @@ function Home() {
   const [submittedProjects, setSubmittedProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [refreshKey, setRefreshKey] = useState(0);
 
   // Fetch approved projects from MongoDB through the backend API.
-  const loadProjects = useCallback(async () => {
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function fetchProjects() {
+      try {
+        const response = await fetch(API_URL, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+          },
+          cache: 'no-store',
+          signal: controller.signal,
+        });
+
+        let data;
+
+        try {
+          data = await response.json();
+        } catch {
+          throw new Error('The server returned an invalid response.');
+        }
+
+        if (!response.ok || data.success !== true) {
+          throw new Error(
+            data.message || 'Unable to load approved projects.'
+          );
+        }
+
+        const projects = Array.isArray(data.projects)
+          ? data.projects
+          : [];
+
+        if (controller.signal.aborted) return;
+
+        // The public gallery API returns approved projects only.
+        setError('');
+        setSubmittedProjects(projects);
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+
+        console.error('Project gallery loading error:', err);
+
+        if (!controller.signal.aborted) {
+          setSubmittedProjects([]);
+          setError(
+            'Could not load projects. Please check whether the backend server is running.'
+          );
+        }
+      } finally {
+        if (!controller.signal.aborted) setLoading(false);
+      }
+    }
+
+    fetchProjects();
+
+    return () => controller.abort();
+  }, [refreshKey]);
+
+  const refreshProjects = () => {
     setLoading(true);
     setError('');
-
-    try {
-      const response = await fetch(API_URL, {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-        },
-        cache: 'no-store',
-      });
-
-      let data;
-
-      try {
-        data = await response.json();
-      } catch {
-        throw new Error('The server returned an invalid response.');
-      }
-
-      if (!response.ok || data.success !== true) {
-        throw new Error(
-          data.message || 'Unable to load approved projects.'
-        );
-      }
-
-      const projects = Array.isArray(data.projects)
-        ? data.projects
-        : [];
-
-      // The public gallery API returns approved projects only.
-      setSubmittedProjects(projects);
-    } catch (err) {
-      console.error('Project gallery loading error:', err);
-
-      setSubmittedProjects([]);
-
-      setError(
-        'Could not load projects. Please check whether the backend server is running.'
-      );
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    loadProjects();
-  }, [loadProjects]);
+    setRefreshKey((currentKey) => currentKey + 1);
+  };
 
   // Normalize API data for the existing project-card design.
   const projects = submittedProjects.map((project, index) => {
@@ -460,7 +475,7 @@ function Home() {
               <button
                 type="button"
                 className="primary-button"
-                onClick={loadProjects}
+                onClick={refreshProjects}
               >
                 Try Again ↻
               </button>
@@ -588,7 +603,7 @@ function Home() {
               <button
                 type="button"
                 className="gallery-refresh-button"
-                onClick={loadProjects}
+                onClick={refreshProjects}
               >
                 <span aria-hidden="true">↻</span>
                 Refresh Projects

@@ -13,6 +13,7 @@ function AdminDashboard() {
   const [success, setSuccess] = useState("");
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
+  const [refreshKey, setRefreshKey] = useState(0);
   const [updatingInstitutionId, setUpdatingInstitutionId] =
     useState(null);
 
@@ -26,74 +27,90 @@ function AdminDashboard() {
     window.location.replace("/admin/login");
   }, []);
 
-  // Load all institutions and projects using the Admin token.
-  const loadDashboard = useCallback(async () => {
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function fetchDashboard() {
+      try {
+        const token = sessionStorage.getItem("adminToken");
+
+        if (!token) {
+          handleLogout();
+          return;
+        }
+
+        const headers = {
+          Authorization: `Bearer ${token}`,
+        };
+        const [institutionResponse, projectResponse] = await Promise.all([
+          fetch(`${API_URL}/admin/institutions`, {
+            method: "GET",
+            headers,
+            cache: "no-store",
+            signal: controller.signal,
+          }),
+          fetch(`${API_URL}/admin/projects`, {
+            method: "GET",
+            headers,
+            cache: "no-store",
+            signal: controller.signal,
+          }),
+        ]);
+        const institutionData = await institutionResponse.json();
+        const projectData = await projectResponse.json();
+
+        if (controller.signal.aborted) return;
+
+        const authenticationFailed = [
+          institutionResponse,
+          projectResponse,
+        ].some(
+          (response) =>
+            response.status === 401 || response.status === 403
+        );
+
+        if (authenticationFailed) {
+          handleLogout();
+          return;
+        }
+
+        if (!institutionResponse.ok) {
+          throw new Error(
+            institutionData.message || "Unable to load institutions."
+          );
+        }
+
+        if (!projectResponse.ok) {
+          throw new Error(
+            projectData.message || "Unable to load projects."
+          );
+        }
+
+        setError("");
+        setInstitutions(institutionData.institutions || []);
+        setProjects(projectData.projects || []);
+      } catch (err) {
+        if (err.name === "AbortError") return;
+
+        console.error("Admin dashboard loading error:", err);
+
+        if (!controller.signal.aborted) {
+          setError(err.message || "Unable to load dashboard.");
+        }
+      } finally {
+        if (!controller.signal.aborted) setLoading(false);
+      }
+    }
+
+    fetchDashboard();
+    return () => controller.abort();
+  }, [handleLogout, refreshKey]);
+
+  const refreshDashboard = () => {
     setLoading(true);
     setError("");
-
-    try {
-      const token = sessionStorage.getItem("adminToken");
-
-      if (!token) {
-        handleLogout();
-        return;
-      }
-
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-
-      const [institutionResponse, projectResponse] = await Promise.all([
-        fetch(`${API_URL}/admin/institutions`, {
-          method: "GET",
-          headers,
-          cache: "no-store",
-        }),
-        fetch(`${API_URL}/admin/projects`, {
-          method: "GET",
-          headers,
-          cache: "no-store",
-        }),
-      ]);
-
-      const institutionData = await institutionResponse.json();
-      const projectData = await projectResponse.json();
-
-      if (
-        institutionResponse.status === 401 ||
-        institutionResponse.status === 403 ||
-        projectResponse.status === 401 ||
-        projectResponse.status === 403
-      ) {
-        handleLogout();
-        return;
-      }
-
-      if (!institutionResponse.ok) {
-        throw new Error(
-          institutionData.message || "Unable to load institutions."
-        );
-      }
-
-      if (!projectResponse.ok) {
-        throw new Error(
-          projectData.message || "Unable to load projects."
-        );
-      }
-
-      setInstitutions(institutionData.institutions || []);
-      setProjects(projectData.projects || []);
-    } catch (err) {
-      console.error("Admin dashboard loading error:", err);
-      setError(err.message || "Unable to load dashboard.");
-    } finally {
-      setLoading(false);
-    }
-  }, [handleLogout]);
-
-  useEffect(() => {
-    loadDashboard();
-  }, [loadDashboard]);
+    setRefreshKey((currentKey) => currentKey + 1);
+  };
 
   // Navigate between dashboard sections.
   const openSection = (section) => {
@@ -446,7 +463,7 @@ function AdminDashboard() {
                     <button
                       type="button"
                       className="admin-secondary-button"
-                      onClick={loadDashboard}
+                      onClick={refreshDashboard}
                     >
                       ↻ Refresh
                     </button>
@@ -499,7 +516,7 @@ function AdminDashboard() {
                     <button
                       type="button"
                       className="admin-secondary-button"
-                      onClick={loadDashboard}
+                      onClick={refreshDashboard}
                     >
                       ↻ Refresh
                     </button>

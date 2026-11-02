@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./InstitutionSignup.css";
 
 const API_URL = "http://localhost:5000/api/institutions";
 
 export default function InstitutionSignup() {
-  const navigate = useNavigate();
-
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -24,10 +22,11 @@ export default function InstitutionSignup() {
   const [error, setError] = useState("");
 
   function handleChange(event) {
-    setForm({
-      ...form,
-      [event.target.name]: event.target.value
-    });
+    const { name, value } = event.target;
+    setForm((currentForm) => ({
+      ...currentForm,
+      [name]: value
+    }));
   }
 
   async function handleSubmit(event) {
@@ -59,21 +58,22 @@ export default function InstitutionSignup() {
 
       const contentType = response.headers.get("content-type") || "";
 
-if (!contentType.includes("application/json")) {
-  const responseText = await response.text();
+      if (!contentType.includes("application/json")) {
+        throw new Error(
+          "Server returned an unexpected response. Check the backend signup route and API URL."
+        );
+      }
 
-  console.error("Unexpected server response:", responseText);
+      const data = await response.json();
 
-  throw new Error(
-    "Server returned HTML instead of JSON. Check the backend signup route and API URL."
-  );
-}
+      if (!response.ok) {
+        throw new Error(data.message || "Registration failed.");
+      }
 
-const data = await response.json();
-
-if (!response.ok) {
-  throw new Error(data.message || "Registration failed.");
-}
+      setMessage(
+        data.message ||
+          "Registration successful. Your account is waiting for admin approval."
+      );
       setForm({
         name: "",
         email: "",
