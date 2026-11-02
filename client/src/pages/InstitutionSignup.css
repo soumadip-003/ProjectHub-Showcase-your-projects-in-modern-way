@@ -1,0 +1,222 @@
+.institution-signup-page {
+  min-height: 100vh;
+  padding: 40px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(87, 58, 190, 0.16), transparent 44%),
+    #0b0d14;
+  color: #f1f2fa;
+  font-family: "DM Sans", sans-serif;
+}
+
+.institution-signup-card {
+  width: 100%;
+  max-width: 780px;
+  padding: 35px;
+  border: 1px solid #25293a;
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(124, 92, 255, 0.08), transparent 45%),
+    #131622;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.institution-signup-brand {
+  display: inline-block;
+  margin-bottom: 25px;
+  color: #b5a5ff;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 25px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.institution-signup-heading {
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.institution-signup-icon {
+  font-size: 42px;
+}
+
+.institution-signup-heading h1 {
+  margin: 12px 0 8px;
+  color: #f1f2fa;
+  font-size: 28px;
+}
+
+.institution-signup-heading p {
+  color: #969cb3;
+  line-height: 1.6;
+}
+
+.institution-signup-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.institution-signup-card label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #c4c8d8;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.institution-signup-card input,
+.institution-signup-card textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 14px;
+  border: 1px solid #30354a;
+  border-radius: 9px;
+  outline: none;
+  background: #0e1019;
+  color: #f1f2fa;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 400;
+}
+
+.institution-signup-card input:focus,
+.institution-signup-card textarea:focus {
+  border-color: #9b8cff;
+  box-shadow: 0 0 0 3px rgba(155, 140, 255, 0.2);
+}
+
+.institution-signup-card input::placeholder,
+.institution-signup-card textarea::placeholder {
+  color: #727991;
+}
+
+.institution-signup-description {
+  margin-top: 20px;
+}
+
+.institution-signup-card textarea {
+  resize: vertical;
+}
+
+.institution-signup-submit {
+  width: 100%;
+  margin-top: 24px;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(110deg, #916bff, #6f52e9);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.2s, transform 0.2s;
+}
+
+.institution-signup-submit:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+
+.institution-signup-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.institution-signup-alert {
+  margin-bottom: 18px;
+  padding: 13px;
+  border-radius: 9px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.error-alert {
+  border: 1px solid rgba(255, 112, 122, 0.24);
+  background: rgba(231, 110, 119, 0.1);
+  color: #ff9aa1;
+}
+
+.success-alert {
+  border: 1px solid rgba(89, 215, 162, 0.24);
+  background: rgba(89, 215, 162, 0.1);
+  color: #7de2b5;
+}
+
+.institution-signup-footer {
+  margin-top: 22px;
+  text-align: center;
+  color: #969cb3;
+}
+
+.institution-signup-footer a {
+  color: #b5a5ff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.institution-signup-note {
+  margin-top: 18px;
+  color: #858ba5;
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .institution-signup-page {
+    padding: 20px 12px;
+  }
+
+  .institution-signup-card {
+    padding: 23px 18px;
+  }
+
+  .institution-signup-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .institution-signup-heading h1 {
+    font-size: 23px;
+  }
+}
+
+/* Force the Create Account button to remain visible */
+.institution-signup-card form {
+  display: block;
+  width: 100%;
+}
+
+.institution-signup-submit {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  min-height: 50px;
+  margin: 24px 0 12px;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(110deg, #916bff, #6f52e9);
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.institution-signup-submit:hover {
+  filter: brightness(1.12);
+}
+
+.institution-signup-submit:disabled {
+  opacity: 0.65 !important;
+  cursor: not-allowed;
+}

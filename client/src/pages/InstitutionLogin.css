@@ -1,0 +1,150 @@
+.institution-login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(87, 58, 190, 0.16), transparent 44%),
+    #0b0d14;
+  color: #f1f2fa;
+  font-family: "DM Sans", sans-serif;
+}
+
+.institution-login-card {
+  width: 100%;
+  max-width: 430px;
+  padding: 34px;
+  border: 1px solid #25293a;
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(124, 92, 255, 0.09), transparent 45%),
+    #131622;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.institution-login-brand {
+  display: inline-block;
+  margin-bottom: 27px;
+  color: #b5a5ff;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.institution-login-title {
+  margin: 0 0 10px;
+  color: #f1f2fa;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 28px;
+  text-align: center;
+}
+
+.institution-login-subtitle {
+  margin: 0 0 26px;
+  color: #969cb3;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.institution-login-label {
+  display: block;
+  margin: 16px 0 8px;
+  color: #c4c8d8;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.institution-login-input {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid #30354a;
+  border-radius: 9px;
+  outline: none;
+  background: #0e1019;
+  color: #f1f2fa;
+  font: inherit;
+}
+
+.institution-login-input::placeholder {
+  color: #727991;
+}
+
+.institution-login-input:focus-visible {
+  border-color: #9b8cff;
+  outline: 2px solid rgba(155, 140, 255, 0.35);
+  outline-offset: 2px;
+}
+
+.institution-login-button {
+  width: 100%;
+  margin-top: 24px;
+  padding: 14px;
+  border: 1px solid #917aff;
+  border-radius: 9px;
+  background: linear-gradient(110deg, #916bff, #6f52e9);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  transition: filter 0.2s, transform 0.2s;
+}
+
+.institution-login-button:hover:not(:disabled) {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+
+.institution-login-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.institution-login-button:focus-visible,
+.institution-login-card a:focus-visible {
+  outline: 2px solid #b5a5ff;
+  outline-offset: 3px;
+}
+
+.institution-login-error {
+  margin-bottom: 16px;
+  padding: 12px;
+  border: 1px solid rgba(255, 112, 122, 0.24);
+  border-radius: 8px;
+  background: rgba(231, 110, 119, 0.1);
+  color: #ff9aa1;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.institution-login-footer {
+  margin: 22px 0 0;
+  color: #969cb3;
+  font-size: 13px;
+  text-align: center;
+  line-height: 1.8;
+}
+
+.institution-login-footer a {
+  color: #b5a5ff;
+  font-weight: 600;
+}
+
+.institution-login-home-link {
+  display: block;
+  margin-top: 16px;
+  color: #858ba5;
+  font-size: 13px;
+  text-align: center;
+}
+
+.institution-login-footer a:hover,
+.institution-login-home-link:hover,
+.institution-login-brand:hover {
+  color: #d3c9ff;
+}
+
+@media (max-width: 480px) {
+  .institution-login-card {
+    padding: 28px 22px;
+  }
+}

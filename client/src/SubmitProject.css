@@ -1,0 +1,179 @@
+.submission-section {
+  width: min(850px, calc(100% - 36px));
+  margin: 0 auto 90px;
+  padding: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(124, 88, 255, 0.1), transparent 40%),
+    #10121e;
+}
+
+.submission-heading {
+  margin-bottom: 30px;
+}
+
+.submission-heading h2 {
+  margin: 13px 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(30px, 5vw, 42px);
+  letter-spacing: -1.5px;
+}
+
+.submission-heading h2 span {
+  color: #a78bfa;
+}
+
+.submission-heading > p {
+  max-width: 560px;
+  color: #9699ad;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.submission-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.form-field {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.form-field label {
+  color: #e0e0ee;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 9px;
+  padding: 13px 14px;
+  outline: none;
+  background: #0b0d17;
+  color: #f4f5ff;
+  font-size: 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-field input:focus,
+.form-field textarea:focus,
+.form-field select:focus {
+  border-color: #9275ff;
+  box-shadow: 0 0 0 3px rgba(146, 117, 255, 0.1);
+}
+
+.form-field select {
+  appearance: none;
+  padding-right: 38px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #9699ad 50%),
+    linear-gradient(135deg, #9699ad 50%, transparent 50%);
+  background-position:
+    calc(100% - 17px) 50%,
+    calc(100% - 12px) 50%;
+  background-repeat: no-repeat;
+  background-size: 5px 5px;
+  cursor: pointer;
+}
+
+.form-field select:invalid {
+  color: #666a81;
+}
+
+.form-field select:valid {
+  color: #f4f5ff;
+}
+
+.form-field select:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.form-field select option {
+  background: #0b0d17;
+  color: #f4f5ff;
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: #666a81;
+}
+
+.form-field textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.7;
+}
+
+.form-field small,
+.character-count {
+  color: #7f8298;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.character-count {
+  align-self: flex-end;
+  margin-top: -4px;
+}
+
+.form-submit {
+  align-self: flex-start;
+  cursor: pointer;
+}
+
+.form-message {
+  padding: 13px 15px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.success-message {
+  border: 1px solid rgba(77, 211, 153, 0.25);
+  background: rgba(77, 211, 153, 0.08);
+  color: #8ee5bd;
+}
+
+.error-message {
+  border: 1px solid rgba(255, 105, 120, 0.25);
+  background: rgba(255, 105, 120, 0.08);
+  color: #ff9ba6;
+}
+
+.form-note {
+  margin: -12px 0 0;
+  color: #7f8298;
+  font-size: 10px;
+  line-height: 1.7;
+}
+
+@media (max-width: 600px) {
+  .submission-section {
+    padding: 25px 18px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .form-submit {
+    width: 100%;
+  }
+}
