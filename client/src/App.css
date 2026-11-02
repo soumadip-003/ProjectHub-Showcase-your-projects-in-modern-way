@@ -82,6 +82,14 @@ button {
   box-shadow: 0 5px 25px rgba(124, 88, 255, .3);
 }
 
+.brand-image {
+  display: block;
+  width: 235px;
+  max-width: 100%;
+  max-height: 70px;
+  object-fit: contain;
+}
+
 .brand-highlight {
   color: #a78bfa;
 }
@@ -938,6 +946,11 @@ button {
   font-size: 17px;
 }
 
+.footer-brand .brand-image {
+  width: 210px;
+  max-height: 62px;
+}
+
 .footer-brand .brand-icon {
   width: 28px;
   height: 28px;
@@ -983,6 +996,15 @@ button {
 
   .brand {
     font-size: 19px;
+  }
+
+  .brand-image {
+    width: 185px;
+    max-height: 56px;
+  }
+
+  .footer-brand .brand-image {
+    width: 190px;
   }
 
   .nav-links {

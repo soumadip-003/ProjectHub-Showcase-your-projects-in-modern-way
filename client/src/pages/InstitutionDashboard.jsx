@@ -706,12 +706,12 @@ function InstitutionDashboard() {
 
       <aside className={`id-sidebar ${mobileMenuOpen ? "id-sidebar-open" : ""}`}>
         <div className="id-brand">
-          <div className="id-brand-mark">P</div>
-
           <div className="id-brand-copy">
-            <span className="id-brand-name">
-              Project<span>Hub</span>
-            </span>
+            <img
+              className="id-brand-logo"
+              src="/projecthub-navbar-logo.png"
+              alt="ProjectHub"
+            />
             <span className="id-brand-caption">INSTITUTION PORTAL</span>
           </div>
 

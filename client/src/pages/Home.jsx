@@ -165,10 +165,11 @@ function Home() {
       {/* NAVBAR */}
       <header className="navbar">
         <a href="#home" className="brand">
-          <span className="brand-icon">✦</span>
-          <span>
-            Project<span className="brand-highlight">Hub</span>
-          </span>
+          <img
+            className="brand-image"
+            src="/projecthub-navbar-logo.png"
+            alt="ProjectHub"
+          />
         </a>
 
         <nav className="nav-links">
@@ -190,7 +191,7 @@ function Home() {
             Admin Login
           </Link>
 
-          <Link to="/submit" className="nav-submit">
+          <Link to="/student/login" className="nav-submit">
             + Submit Project
           </Link>
         </div>
@@ -229,7 +230,7 @@ function Home() {
                 Explore Projects <span>↗</span>
               </button>
 
-              <Link to="/submit" className="secondary-button">
+              <Link to="/student/login" className="secondary-button">
                 Submit Your Work <span>＋</span>
               </Link>
 
@@ -562,7 +563,7 @@ function Home() {
                   </p>
 
                   {projects.length === 0 ? (
-                    <Link to="/submit" className="primary-button">
+                    <Link to="/student/login" className="primary-button">
                       Submit Your Project <span>↗</span>
                     </Link>
                   ) : (
@@ -617,10 +618,11 @@ function Home() {
       {/* FOOTER */}
       <footer className="footer" id="admin">
         <a href="#home" className="brand footer-brand">
-          <span className="brand-icon">✦</span>
-          <span>
-            Project<span className="brand-highlight">Hub</span>
-          </span>
+          <img
+            className="brand-image"
+            src="/projecthub-navbar-logo.png"
+            alt="ProjectHub"
+          />
         </a>
 
         <p>Made with curiosity &amp; code.</p>

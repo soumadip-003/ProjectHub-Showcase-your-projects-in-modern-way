@@ -98,7 +98,9 @@ function StudentDashboard() {
   return (
     <main className="student-dashboard">
       <header className="student-dashboard-header">
-        <Link to="/" className="student-dashboard-brand">ProjectHub</Link>
+        <div className="student-dashboard-brand">
+          <img src="/projecthub-navbar-logo.png" alt="ProjectHub" />
+        </div>
         <div className="student-dashboard-actions">
           <Link className="student-dashboard-submit" to="/submit">Submit a project</Link>
           <button type="button" onClick={handleLogout}>Sign out</button>
@@ -187,6 +189,15 @@ function StudentDashboard() {
           )}
         </section>
       </section>
+
+      <footer className="student-dashboard-footer">
+        <div className="student-dashboard-footer-brand">
+          <img src="/projecthub-navbar-logo.png" alt="ProjectHub" />
+        </div>
+        <span>
+          © {new Date().getFullYear()} ProjectHub · Student Project Showcase
+        </span>
+      </footer>
     </main>
   );
 }

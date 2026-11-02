@@ -1,5 +1,4 @@
 import { useEffect, useState, useCallback } from "react";
-import { Link } from "react-router-dom";
 import SupportChat from "../components/SupportChat";
 import "./AdminDashboard.css";
 
@@ -233,10 +232,13 @@ function AdminDashboard() {
     <div className="admin-layout" id="admin-top">
       {/* Sidebar */}
       <aside className="admin-sidebar">
-        <Link to="/" className="admin-brand">
-          <span className="admin-brand-icon">✦</span>
-          <span>ProjectHub</span>
-        </Link>
+        <div className="admin-brand">
+          <img
+            className="admin-brand-image"
+            src="/projecthub-navbar-logo.png"
+            alt="ProjectHub"
+          />
+        </div>
 
         <div className="admin-label">ADMINISTRATION</div>
 
