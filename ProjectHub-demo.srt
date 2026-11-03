@@ -1,0 +1,35 @@
+1
+00:00:00,150 --> 00:00:09,188
+Welcome to ProjectHub, the student project showcase that connects student creativity with institutional review and public discovery.
+
+2
+00:00:09,438 --> 00:00:25,339
+Start on the public gallery. Visitors can explore approved student work, search by project details, and filter by technology. Each project card brings its description and available links into one clear view.
+
+3
+00:00:25,589 --> 00:00:40,476
+Students can create an account with their name, email, and password, then sign in to a dedicated workspace. A student account keeps its own submissions together, making it easy to check progress at a glance.
+
+4
+00:00:40,726 --> 00:00:55,538
+Back in the student dashboard, project totals and review statuses make it simple to follow every submission. Each entry shows its institution, submission date, technologies, and any available project links.
+
+5
+00:00:55,788 --> 00:01:13,375
+To share a project, choose an institution, add a title and description, list the technologies used, and optionally include GitHub and live demo links. Submit once, and the project enters the institution review workflow as pending.
+
+6
+00:01:13,625 --> 00:01:24,987
+Institutions sign in to review projects submitted to them. They can approve or reject a submission, and the updated decision appears in the student's project status.
+
+7
+00:01:25,237 --> 00:01:40,044
+Administrators manage institution access separately, including institution approval. Once approved, a project can be discovered in the public gallery, where visitors can search and filter the showcase.
+
+8
+00:01:40,294 --> 00:01:55,870
+From the first submission to public discovery, ProjectHub brings the student project journey together. This video is an illustrative walkthrough using fictional sample records; it does not show live account or database activity.
+
+9
+00:01:56,120 --> 00:02:01,324
+ProjectHub. Build, share, showcase.

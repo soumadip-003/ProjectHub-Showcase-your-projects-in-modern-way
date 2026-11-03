@@ -16,8 +16,6 @@ client/.env
 # Local uploads and logs
 server/uploads/*
 !server/uploads/.gitkeep
-ProjectHub-demo.mp4
-ProjectHub-demo.srt
 *.log
 npm-debug.log*
 
