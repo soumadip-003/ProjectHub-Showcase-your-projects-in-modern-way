@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b0d14">
+    <meta name="description" content="Watch the ProjectHub student project showcase demo.">
+    <title>ProjectHub Demo</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        background: #0b0d14;
+        color: #f1f2fa;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        padding: 32px 18px;
+      }
+
+      main {
+        width: min(100%, 960px);
+      }
+
+      h1 {
+        margin: 0 0 10px;
+        font-size: clamp(1.7rem, 5vw, 2.5rem);
+      }
+
+      p {
+        margin: 0 0 24px;
+        color: #a9aec2;
+        line-height: 1.6;
+      }
+
+      video {
+        display: block;
+        width: 100%;
+        border: 1px solid #30354a;
+        border-radius: 14px;
+        background: #000;
+        box-shadow: 0 24px 70px #0008;
+      }
+
+      a {
+        color: #b5a5ff;
+      }
+
+      .note {
+        margin-top: 16px;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>ProjectHub Demo</h1>
+      <p>See how students, institutions, and administrators use ProjectHub.</p>
+      <video controls controlsList="nodownload" disablePictureInPicture playsinline preload="metadata">
+        <source src="ProjectHub-demo.mp4" type="video/mp4">
+        <track
+          kind="captions"
+          src="ProjectHub-demo.vtt"
+          srclang="en"
+          label="English"
+          default
+        >
+        Your browser does not support HTML video.
+      </video>
+      <p class="note">
+        This illustrative walkthrough uses fictional sample records and does
+        not show live account or database activity.
+      </p>
+      <p><a href="https://github.com/soumadip-003/ProjectHub-Showcase-your-projects-in-modern-way">Back to the ProjectHub repository</a></p>
+    </main>
+  </body>
+</html>

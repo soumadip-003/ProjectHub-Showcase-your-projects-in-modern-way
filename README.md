@@ -7,11 +7,11 @@ institution registrations; and approved projects appear in the public gallery.
 
 ## Demo
 
-- [Watch or download the ProjectHub demo video](https://github.com/soumadip-003/ProjectHub-Showcase-your-projects-in-modern-way/raw/refs/heads/main/ProjectHub-demo.mp4)
-- [English subtitles](ProjectHub-demo.srt)
+- [Watch the ProjectHub demo](https://soumadip-003.github.io/ProjectHub-Showcase-your-projects-in-modern-way/)
 
-The walkthrough uses fictional sample records and does not show live account
-or database activity.
+The player includes play/pause controls and optional English captions; it
+doesn't display a download button. The walkthrough uses fictional sample
+records and does not show live account or database activity.
 
 ## Requirements
 
