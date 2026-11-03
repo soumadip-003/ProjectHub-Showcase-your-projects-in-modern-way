@@ -46,6 +46,7 @@ function normalizeTechnologies(technologies) {
 }
 
 function Home() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [activeFilter, setActiveFilter] = useState('All');
 
@@ -175,6 +176,8 @@ function Home() {
     });
   };
 
+  const closeMobileMenu = () => setMobileMenuOpen(false);
+
   return (
     <div className="app">
       {/* NAVBAR */}
@@ -187,30 +190,63 @@ function Home() {
           />
         </a>
 
-        <nav className="nav-links">
-          <a className="nav-active" href="#home">
-            Home
-          </a>
+        <button
+          type="button"
+          className="nav-menu-toggle"
+          aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={mobileMenuOpen}
+          aria-controls="primary-navigation"
+          onClick={() => setMobileMenuOpen((isOpen) => !isOpen)}
+        >
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+        </button>
 
-          <a href="#projects">Explore Projects</a>
+        <div
+          className={`navbar-menu${mobileMenuOpen ? ' is-open' : ''}`}
+          id="primary-navigation"
+        >
+          <nav className="nav-links" aria-label="Main navigation">
+            <a className="nav-active" href="#home" onClick={closeMobileMenu}>
+              Home
+            </a>
 
-          <a href="#about">About</a>
-        </nav>
+            <a href="#projects" onClick={closeMobileMenu}>
+              Explore Projects
+            </a>
 
-        <div className="nav-actions">
-          <Link to="/institute/signup" className="login-link">
-            Institute Sign Up
-          </Link>
+            <a href="#about" onClick={closeMobileMenu}>
+              About
+            </a>
+          </nav>
 
-          <Link to="/admin/login" className="login-link">
-            Admin Login
-          </Link>
+          <div className="nav-actions">
+            <Link
+              to="/institute/signup"
+              className="login-link"
+              onClick={closeMobileMenu}
+            >
+              Institute Sign Up
+            </Link>
 
-          <Link to="/student/login" className="nav-submit">
-            + Submit Project
-          </Link>
+            <Link
+              to="/admin/login"
+              className="login-link"
+              onClick={closeMobileMenu}
+            >
+              Admin Login
+            </Link>
+
+            <Link
+              to="/student/login"
+              className="nav-submit"
+              onClick={closeMobileMenu}
+            >
+              + Submit Project
+            </Link>
+          </div>
         </div>
-
       </header>
 
       <main>

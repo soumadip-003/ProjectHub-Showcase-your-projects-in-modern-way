@@ -1434,9 +1434,20 @@
 @media (max-width: 760px) {
   .id-sidebar {
     width: 275px;
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     transform: translateX(-102%);
     transition: transform 0.25s ease;
     box-shadow: none;
+  }
+
+  .id-brand,
+  .id-sidebar-label,
+  .id-navigation,
+  .id-sidebar-bottom {
+    flex-shrink: 0;
   }
 
   .id-sidebar-open {

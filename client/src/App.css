@@ -54,11 +54,21 @@ button {
   width: min(1240px, calc(100% - 64px));
   height: 82px;
   margin: auto;
+  position: relative;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid rgba(255,255,255,.07);
   gap: 24px;
+}
+
+.navbar-menu {
+  display: contents;
+}
+
+.nav-menu-toggle {
+  display: none;
 }
 
 .brand {
@@ -990,7 +1000,7 @@ button {
   .navbar {
     width: calc(100% - 32px);
     height: 70px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 10px;
   }
 
@@ -1007,27 +1017,99 @@ button {
     width: 190px;
   }
 
-  .nav-links {
+  .nav-menu-toggle {
+    width: 44px;
+    height: 44px;
+    padding: 11px 9px;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1px solid rgba(167,139,250,.35);
+    border-radius: 10px;
+    background: rgba(124, 88, 255, .12);
+    color: #f4f5ff;
+  }
+
+  .nav-menu-toggle span {
+    width: 20px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform .2s, opacity .2s;
+  }
+
+  .nav-menu-toggle[aria-expanded="true"] span:first-child {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .nav-menu-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-menu-toggle[aria-expanded="true"] span:last-child {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .navbar-menu {
+    position: absolute;
+    top: calc(100% + 1px);
+    right: 0;
+    left: 0;
     display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 14px;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 0 0 14px 14px;
+    background: #0e1019;
+    box-shadow: 0 18px 36px rgba(0,0,0,.38);
   }
 
+  .navbar-menu.is-open {
+    display: flex;
+  }
+
+  .nav-links,
   .nav-actions {
-    gap: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
   }
 
-  .nav-submit {
-    padding: 9px 10px;
-    font-size: 10px;
+  .nav-links {
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
   }
 
-  .login-link {
-    font-size: 11px;
+  .nav-links a,
+  .nav-actions .login-link,
+  .nav-actions .nav-submit {
+    min-height: 44px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+
+  .nav-links a:hover,
+  .nav-actions .login-link:hover {
+    background: rgba(255,255,255,.06);
+  }
+
+  .nav-actions .nav-submit {
+    justify-content: center;
   }
 
   .hero {
     width: calc(100% - 40px);
     grid-template-columns: 1fr;
-    padding: 65px 0 68px;
+    padding: 20px 0 68px;
     gap: 20px;
   }
 
@@ -1159,8 +1241,6 @@ button {
 @media (max-width: 390px) {
   .brand { font-size: 17px; }
   .brand-icon { width: 30px; height: 30px; }
-  .nav-actions { gap: 8px; }
-  .nav-submit { padding: 8px; }
   .hero h1 { font-size: 39px; }
   .announcement { font-size: 9px; }
   .hero-buttons { gap: 8px; }
