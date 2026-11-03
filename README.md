@@ -5,6 +5,14 @@ Express API, and MongoDB Atlas. Students can submit projects and track their
 review status; institutions review projects; administrators manage
 institution registrations; and approved projects appear in the public gallery.
 
+## Demo
+
+- [Watch or download the ProjectHub demo video](ProjectHub-demo.mp4)
+- [English subtitles](ProjectHub-demo.srt)
+
+The walkthrough uses fictional sample records and does not show live account
+or database activity.
+
 ## Requirements
 
 - Node.js 20.19+ or 22.12+
@@ -69,6 +77,3 @@ cd client
 npm run build
 npm run lint
 ```
-
-The repository currently has some pre-existing lint errors in the admin,
-homepage, and institution dashboard screens.
